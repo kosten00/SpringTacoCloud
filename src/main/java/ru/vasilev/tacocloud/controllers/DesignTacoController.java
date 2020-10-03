@@ -1,36 +1,44 @@
 package ru.vasilev.tacocloud.controllers;
 
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.stereotype.Controller;
 
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import ru.vasilev.tacocloud.model.Ingredient;
 import ru.vasilev.tacocloud.model.Ingredient.Type;
+import ru.vasilev.tacocloud.model.Taco;
 
 import java.util.*;
 
 @Slf4j
 @RestController
-@RequestMapping("design")
+@RequestMapping("/design")
 public class DesignTacoController {
 
     private List<Ingredient> ingredientList = Arrays.asList(
-            new Ingredient("1", "a", Type.WRAP),
-            new Ingredient("2", "b", Type.WRAP),
-            new Ingredient("3", "c", Type.PROTEIN),
-            new Ingredient("4", "d", Type.PROTEIN),
-            new Ingredient("5", "e", Type.VEGGIES),
-            new Ingredient("6", "f", Type.VEGGIES),
-            new Ingredient("7", "g", Type.CHEESE),
-            new Ingredient("8", "h", Type.CHEESE),
-            new Ingredient("9", "i", Type.SAUCE),
-            new Ingredient("0", "j", Type.SAUCE)
+            new Ingredient("FLTO", "Flour Tortilla", Type.WRAP),
+            new Ingredient("COTO", "Corn Tortilla", Type.WRAP),
+            new Ingredient("GRBF", "Ground Beef", Type.PROTEIN),
+            new Ingredient("CARN", "Carnitas", Type.PROTEIN),
+            new Ingredient("TMTO", "Diced Tomatoes", Type.VEGGIES),
+            new Ingredient("LETC", "Lettuce", Type.VEGGIES),
+            new Ingredient("CHED", "Cheddar", Type.CHEESE),
+            new Ingredient("JACK", "Monterrey Jack", Type.CHEESE),
+            new Ingredient("SLSA", "Salsa", Type.SAUCE),
+            new Ingredient("SRCR", "Sour Cream", Type.SAUCE)
     );
 
     @GetMapping
     public List<Ingredient> showDesignForm() {
         return ingredientList;
+    }
+
+    @Deprecated
+    @PostMapping
+    public String processDesign(Taco taco) {
+
+        return "redirect:/orders/current";
     }
 }

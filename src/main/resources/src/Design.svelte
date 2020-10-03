@@ -1,32 +1,59 @@
 <script>
+  let tacoIngredients = {};
+  let tacoName = "";
+
   async function doGet() {
     const response = await fetch("/design");
-    
-    if (response.ok) {
-      return JSON.parse(await response.text());
-    }
+    const text = await response.text();
 
-    throw new Error("Server is not responding");
+    if (response.ok) {
+      return JSON.parse(text);
+    }
+    throw new Error(text);
   }
 
-  let distinct = (ingredients) => {
-    return [...new Set(ingredients.map((e) => e.type))];
-  };
+  function distinctByType(allIngredients) {
+    return [...new Set(allIngredients.map((e) => e.type))];
+  }
+
+  function finishTacoDesign() {
+    const tacoNew = {
+      name: tacoName,
+      ingredients: Object.values(tacoIngredients),
+    };
+
+    //redirect
+  }
 </script>
+
+<p>{JSON.stringify(tacoIngredients)}</p>
 
 {#await doGet()}
   <p>Waiting for server response..</p>
-{:then ingredients}
+{:then allIngredients}
   <ul>
-    {#each distinct(ingredients) as distinctType}
+    {#each distinctByType(allIngredients) as distinctType}
       <li>Choose {distinctType} you like!</li>
       <ul>
-        {#each ingredients as { name, type }}
-          {#if type === distinctType}
-            <p>Name: {name}</p>
-          {/if}
-        {/each}
+        <form>
+          {#each allIngredients as { name, type }}
+            {#if type === distinctType}
+              <li>
+                <label><input
+                    type="radio"
+                    name={type}
+                    bind:group={tacoIngredients[type]}
+                    value={name} />
+                  {name}</label>
+              </li>
+            {/if}
+          {/each}
+        </form>
       </ul>
     {/each}
   </ul>
 {/await}
+
+<p>Name your Taco creation:</p>
+<input bind:value={tacoName} />
+<button on:click={finishTacoDesign}> Submit your taco! </button>
