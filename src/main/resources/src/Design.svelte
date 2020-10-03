@@ -1,16 +1,61 @@
 <script>
+  import { createEventDispatcher } from "svelte";
+  let dispatch = createEventDispatcher();
+
   let tacoIngredients = {};
   let tacoName = "";
 
-  async function doGet() {
-    const response = await fetch("/design");
-    const text = await response.text();
-
-    if (response.ok) {
-      return JSON.parse(text);
-    }
-    throw new Error(text);
+  function doGet() {
+    return [
+      {
+        name: "Flour Tortilla",
+        type: "WRAP",
+      },
+      { name: "Corn Tortilla", type: "WRAP" },
+      {
+        name: "Ground Beef",
+        type: "PROTEIN",
+      },
+      {
+        name: "Carnitas",
+        type: "PROTEIN",
+      },
+      {
+        name: "Diced Tomatoes",
+        type: "VEGGIES",
+      },
+      {
+        name: "Lettuce",
+        type: "VEGGIES",
+      },
+      {
+        name: "Cheddar",
+        type: "CHEESE",
+      },
+      {
+        name: "Monterrey Jack",
+        type: "CHEESE",
+      },
+      {
+        name: "Salsa",
+        type: "SAUCE",
+      },
+      {
+        name: "Sour Cream",
+        type: "SAUCE",
+      },
+    ];
   }
+
+  // async function doGet() {
+  //   const response = await fetch("/design");
+  //   const text = await response.text();
+
+  //   if (response.ok) {
+  //     return JSON.parse(text);
+  //   }
+  //   throw new Error(text);
+  // }
 
   function distinctByType(allIngredients) {
     return [...new Set(allIngredients.map((e) => e.type))];
@@ -21,8 +66,7 @@
       name: tacoName,
       ingredients: Object.values(tacoIngredients),
     };
-
-    //redirect
+    dispatch("addTaco", tacoNew);
   }
 </script>
 

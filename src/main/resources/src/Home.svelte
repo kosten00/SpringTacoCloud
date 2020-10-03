@@ -2,27 +2,18 @@
   import Design from "./Design.svelte";
   import Order from "./Order.svelte";
 
-  import { storedTaco } from "./stores/store.js";
+  let taco = {};
 
-  let taco;
+  let showDesign = true;
+  let showOrderDetails = false;
 
-  let design = true;
-  let order = false;
+  const addTaco = (e) => {
+    taco = e.detail;
 
-  storedTaco.subscribe((value) => {
-    taco = value;
-
-    console.log("from subscribe function" + taco.name);
-
-    if (taco.name !== "") {
-      design = false;
-      order = true;
-    }
-  });
+    showDesign = false;
+    showOrderDetails = true;
+  };
 </script>
-
-{design}
-{order}
 
 <style>
   h1 {
@@ -30,12 +21,14 @@
   }
 </style>
 
+<p>{JSON.stringify(taco)}</p>
 <h1>Design your taco!</h1>
 <img src="pictures/shaverma.png" alt="" />
 
-{#if design}
-  <Design />
+{#if showDesign}
+<Design on:addTaco={addTaco} />
 {/if}
-{#if order}
-  <Order />
+
+{#if showOrderDetails}
+<Order />
 {/if}

@@ -1,4 +1,9 @@
 <script>
+
+    //get order details form from serve?
+
+    //post full details form
+
 </script>
 
 <h3>Deliver my taco to:</h3>
@@ -11,3 +16,5 @@
 <label><input type="text" />Credit Card #: </label>
 <label><input type="text" />Expiration: </label>
 <label><input type="text" />CVV: </label>
+
+<button>Submit my order!</button>
