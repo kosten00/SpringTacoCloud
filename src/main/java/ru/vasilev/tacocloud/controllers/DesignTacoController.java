@@ -17,7 +17,8 @@ import java.util.*;
 @RequestMapping("/design")
 public class DesignTacoController {
 
-    private List<Ingredient> ingredientList = Arrays.asList(
+    //TODO this should be taken from DB;
+    private final List<Ingredient> ingredientList = Arrays.asList(
             new Ingredient("FLTO", "Flour Tortilla", Type.WRAP),
             new Ingredient("COTO", "Corn Tortilla", Type.WRAP),
             new Ingredient("GRBF", "Ground Beef", Type.PROTEIN),
@@ -31,7 +32,7 @@ public class DesignTacoController {
     );
 
     @GetMapping
-    public List<Ingredient> showDesignForm() {
+    public List<Ingredient> getDesignForm() {
         return ingredientList;
     }
 

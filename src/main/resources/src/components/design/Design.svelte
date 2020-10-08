@@ -5,8 +5,7 @@
   let tacoIngredients = {};
   let tacoName = "";
 
-  function doGet() {
-    return [
+  let designMock = [
       {
         name: "Flour Tortilla",
         type: "WRAP",
@@ -45,12 +44,10 @@
         type: "SAUCE",
       },
     ];
-  }
 
   // async function doGet() {
   //   const response = await fetch("/design");
   //   const text = await response.text();
-
   //   if (response.ok) {
   //     return JSON.parse(text);
   //   }
@@ -70,9 +67,20 @@
   }
 </script>
 
+<style>
+  input {
+  outline: none;
+  border-width: 2px;
+}
+
+.field-danger {
+      border-color: red;
+  }
+</style>
+
 <p>{JSON.stringify(tacoIngredients)}</p>
 
-{#await doGet()}
+<!-- {#await doGet()}
   <p>Waiting for server response..</p>
 {:then allIngredients}
   <ul>
@@ -96,7 +104,30 @@
       </ul>
     {/each}
   </ul>
-{/await}
+{/await} -->
+
+<ul>
+  {#each distinctByType(designMock) as distinctType}
+  <li>Choose {distinctType} you like!</li>
+      <ul>
+        <form>
+          {#each designMock as { name, type }}
+            {#if type === distinctType}
+              <li>
+                <label><input
+                    type="radio"
+                    name={type}
+                    bind:group={tacoIngredients[type]}
+                    value={name} 
+                    class:field-danger={name === ''}/>
+                  {name}</label>
+              </li>
+            {/if}
+          {/each}
+        </form>
+      </ul>
+    {/each}
+</ul>
 
 <p>Name your Taco creation:</p>
 <input bind:value={tacoName} />

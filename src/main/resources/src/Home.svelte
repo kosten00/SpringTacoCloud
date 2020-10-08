@@ -1,6 +1,6 @@
 <script>
-  import Design from "./Design.svelte";
-  import Order from "./Order.svelte";
+  import Design from "./components/design/Design.svelte";
+  import Order from "./components/order/Order.svelte";
 
   let taco = {};
 
